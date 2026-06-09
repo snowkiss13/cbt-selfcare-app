@@ -4,10 +4,12 @@ import { useMemo, useState } from "react";
 import { buildHypothesis, useAppStore } from "@/lib/store";
 import { buildCheckInSuggestion } from "@/lib/patterns";
 import { RadialMoodSlider } from "@/components/RadialMoodSlider";
-import { Card, Chip } from "@/components/ui";
+import { Card } from "@/components/ui";
 
 const moodWords = ["嬉しい", "穏やか", "充実", "疲れた", "不安", "イライラ", "悲しい", "焦り", "空虚", "その他"];
 const factors = ["仕事", "人間関係", "健康", "お金", "将来", "天気", "睡眠", "その他"];
+const moonPhases = ["🌑", "🌒", "🌓", "🌖", "🌕"];
+const moonLabels = ["とても重い", "重い", "普通", "軽い", "とても軽い"];
 
 export function CheckIn() {
   const [mood, setMood] = useState<1 | 2 | 3 | 4 | 5>(3);
@@ -38,16 +40,20 @@ export function CheckIn() {
         <h2 className="mb-3 text-[22px] font-semibold leading-tight">今の気分は？</h2>
         <Card>
           <RadialMoodSlider value={mood} onChange={setMood} />
+          <div className="mt-3 text-center">
+            <div className="text-4xl transition-all duration-200" style={{ textShadow: "0 0 20px rgba(251,191,36,0.6)" }}>
+              {moonPhases[mood - 1]}
+            </div>
+            <p className="mt-1 text-sm font-semibold text-[var(--text-secondary)]">{moonLabels[mood - 1]}</p>
+          </div>
           <div className="mt-5 grid grid-cols-2 gap-2 sm:grid-cols-3">
             {moodWords.map((word) => (
               <button
                 key={word}
                 type="button"
                 onClick={() => setSelectedMoodWords((current) => toggle(current, word))}
-                className={`min-h-11 select-none rounded-button px-3 py-2 text-sm font-medium ${
-                  selectedMoodWords.includes(word)
-                    ? "scale-[1.04] border-2 border-[var(--primary)] bg-[var(--primary)]/10 text-ink transition-transform duration-150"
-                    : "border border-[var(--gray-200)] bg-white text-ink transition-colors duration-150 hover:border-[var(--gray-300)]"
+                className={`min-h-11 select-none rounded-button px-3 py-2 text-sm font-medium transition-all duration-150 ${
+                  selectedMoodWords.includes(word) ? "chip-selected scale-[1.04]" : "chip-unselected hover:border-[var(--gray-300)]"
                 }`}
               >
                 {word}
@@ -65,10 +71,8 @@ export function CheckIn() {
               key={factor}
               type="button"
               onClick={() => setSelectedFactors((current) => toggle(current, factor))}
-              className={`min-h-12 select-none rounded-button px-4 py-2 text-sm font-medium ${
-                selectedFactors.includes(factor)
-                  ? "scale-[1.04] border-2 border-[var(--primary)] bg-[var(--primary)]/10 text-ink transition-transform duration-150"
-                  : "border border-[var(--gray-200)] bg-white text-ink transition-colors duration-150 hover:border-[var(--gray-300)]"
+              className={`min-h-12 select-none rounded-button px-4 py-2 text-sm font-medium transition-all duration-150 ${
+                selectedFactors.includes(factor) ? "chip-selected scale-[1.04]" : "chip-unselected hover:border-[var(--gray-300)]"
               }`}
             >
               {factor}
@@ -102,7 +106,7 @@ export function CheckIn() {
         </Card>
       )}
 
-      <button className="mb-6 min-h-12 w-full rounded-button bg-primary px-4 py-3 font-semibold text-white" onClick={save}>
+      <button className="btn-primary mb-6 min-h-12 w-full px-4 py-3 font-semibold" onClick={save}>
         チェックインを完了
       </button>
     </>

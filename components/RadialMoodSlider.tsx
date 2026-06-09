@@ -42,19 +42,29 @@ export function RadialMoodSlider({ value, onChange }: { value: 1 | 2 | 3 | 4 | 5
         }}
       >
         <defs>
-          <linearGradient id="mood-track-gradient" x1="34" y1="178" x2="286" y2="178" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stopColor="#8b7ec8" />
-            <stop offset="100%" stopColor="#d4874a" />
+          <linearGradient id="auroraGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#f472b6" />
+            <stop offset="25%" stopColor="#818cf8" />
+            <stop offset="50%" stopColor="#a78bfa" />
+            <stop offset="75%" stopColor="#34d399" />
+            <stop offset="100%" stopColor="#fbbf24" />
           </linearGradient>
+          <filter id="handleGlow">
+            <feGaussianBlur stdDeviation="4" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
         </defs>
-        <path d="M 34 178 A 126 126 0 0 1 286 178" fill="none" stroke="rgba(0,0,0,.12)" strokeWidth="18" strokeLinecap="round" />
-        <path d={describeArc(160, 178, 126, 180, angle)} fill="none" stroke="url(#mood-track-gradient)" strokeWidth="18" strokeLinecap="round" className="transition-all duration-200" />
+        <path d="M 34 178 A 126 126 0 0 1 286 178" fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="18" strokeLinecap="round" />
+        <path d={describeArc(160, 178, 126, 180, angle)} fill="none" stroke="url(#auroraGrad)" strokeWidth="18" strokeLinecap="round" className="transition-all duration-200" />
         {[1, 2, 3, 4, 5].map((tick) => {
           const tickPoint = polarToPoint(180 - ((tick - 1) / 4) * 180);
           return <circle key={tick} cx={tickPoint.x} cy={tickPoint.y} r={tick === value ? 5 : 3} fill={tick === value ? "var(--primary)" : "rgba(0,0,0,.28)"} />;
         })}
-        <circle cx={point.x} cy={point.y} r="14" fill="white" stroke="var(--primary)" strokeWidth="4" className="transition-all duration-200" />
-        <text x="160" y="126" textAnchor="middle" className="fill-[var(--gray-900)] text-sm font-semibold">
+        <circle cx={point.x} cy={point.y} r="14" fill="#1a1035" stroke="#a78bfa" strokeWidth="3" filter="url(#handleGlow)" className="transition-all duration-200" />
+        <text x="160" y="126" textAnchor="middle" fill="#c4b5fd" className="text-sm font-semibold">
           {labels[value - 1]}
         </text>
       </svg>
