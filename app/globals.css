@@ -1,0 +1,127 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root,
+[data-theme="natural"] {
+  --primary: #4f86c6;
+  --calm: #8b7ec8;
+  --success: #5a9e6f;
+  --warning: #d4874a;
+  --gray-50: #faf9f7;
+  --gray-100: #f4f2ef;
+  --gray-200: #e5e5e5;
+  --gray-300: #d4d4d4;
+  --gray-500: #737373;
+  --gray-700: #3d3835;
+  --gray-900: #1e1b18;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.04);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.1), 0 4px 8px rgba(0, 0, 0, 0.04);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+[data-theme="cool"] {
+  --primary: #2e86ab;
+  --calm: #5c7fa6;
+  --success: #4d9476;
+  --warning: #c78b45;
+  --gray-50: #f4f8fb;
+  --gray-100: #e8f0f5;
+  --gray-200: #d9e5ed;
+  --gray-300: #c4d4de;
+  --gray-500: #647884;
+  --gray-700: #283943;
+  --gray-900: #17242b;
+}
+
+[data-theme="warm"] {
+  --primary: #c2708b;
+  --calm: #d4875a;
+  --success: #6f9d68;
+  --warning: #c99042;
+  --gray-50: #fdf8f5;
+  --gray-100: #f5ece6;
+  --gray-200: #eadbd3;
+  --gray-300: #ddc7bd;
+  --gray-500: #826b64;
+  --gray-700: #463532;
+  --gray-900: #271c19;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--gray-50);
+  color: var(--gray-700);
+  font-family: Inter, "Noto Sans JP", system-ui, sans-serif;
+  letter-spacing: 0;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+.rounded-card.border {
+  border-color: transparent;
+  box-shadow: var(--shadow-sm);
+}
+
+.font-sm {
+  font-size: 14px;
+}
+
+.font-md {
+  font-size: 16px;
+}
+
+.font-lg {
+  font-size: 18px;
+}
+
+.font-xl {
+  font-size: 20px;
+}
+
+@keyframes breathe {
+  0% {
+    transform: scale(0.6);
+    opacity: 0.6;
+  }
+  21% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  21.01%,
+  57.9% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  58% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0.6);
+    opacity: 0.6;
+  }
+}
+
+.breathe-circle {
+  animation: breathe 19s var(--ease-out) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
